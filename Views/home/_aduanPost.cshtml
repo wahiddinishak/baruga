@@ -1,0 +1,28 @@
+﻿@model trComplaintLv1
+
+<form asp-controller="Home" asp-action="aduanPost" id="form-aduan">
+    <div class="input-group no-border">
+        <textarea rows="6" class="form-control" style="overflow: hidden;"
+                  placeholder="Ketik aspirasi Anda.." asp-for="desc" id="aspirasi"></textarea>
+        <span asp-validation-for="desc" style="color: red;"></span>
+    </div>
+
+    <div class="input-group no-border">
+        <textarea rows="6" class="form-control" style="overflow: hidden;"
+                  placeholder="Detail Lokasi.." asp-for="descLocation" id="descloc"></textarea>
+        <span asp-validation-for="descLocation" style="color: red;"></span>
+    </div>
+
+    <div class="input-group no-border">
+        <select class="form-control form-control-lg" id="pilihkabkot" onchange="LoadKec($('#pilihkabkot').val())" asp-for="kabkot">
+            <option value="" hidden disabled selected style="height: auto;">Kabupaten / Kota</option>
+        </select>
+    </div>
+
+    <div class="input-group no-border">
+        <select class="form-control form-control-lg" id="pilihkec" asp-for="kec">
+            <option value="" hidden disabled selected style="height: auto;">Kecamatan</option>
+        </select>
+    </div>
+</form>
+

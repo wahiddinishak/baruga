@@ -1,0 +1,313 @@
+﻿@model msUsersPelapor
+
+@{
+    ViewData["Title"] = "Aduan";
+    Layout = "_PageLayout";
+}
+
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+
+
+<div class="container">
+    <div class="row">
+
+        <!-- kolom utama -->
+        <div class="col-8">
+
+            <!-- submit aduan -->
+            <div class="section">
+                <div class="container">
+                    <div class="single-aduan-container">
+                        <div class="card card-aduan">
+                            <form class="form" action="">
+                                <br>
+                                <div class="card-body">
+                                    <div class="input-group no-border">
+                                        <textarea rows="6" class="form-control" style="overflow: hidden;"
+                                                  placeholder="Ketik aduan Anda.."></textarea>
+                                    </div>
+
+                                    <div class="input-group no-border">
+                                        <input type="text" class="form-control" placeholder="Email..">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="form-control form-control-lg">
+                                            <option value="" hidden disabled selected style="height: auto;">Pilih Kategori</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- upload gambar -->
+                                    <div id="uploadGambar" style="background-color: #EEEEEE; display:none;">
+                                        <input id="demo" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <div class="container">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <div class="p-2">
+                                                <button class="btn btn-primary btn-round" type="button" onclick="gambarToggle()">
+                                                    <i class="fas fa-paperclip"></i> Lampiran
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button class="btn btn-primary btn-round" type="button">
+                                                    <i class="fas fa-paper-plane"></i> Kirim
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- list aduan -->
+            <div class="section">
+                <div class="container" style="margin-top: -100px">
+                    <div class="d-flex flex-column">
+                        @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.AllComplaint)
+                        {
+                            <div class="p-2">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a href="@String.Concat("/aduan/detail/", @aduan.ID)" style="color:white;">
+                                            @{
+                                                if (aduan.Topics.Length > 81)
+                                                {
+                                                    @String.Concat(@aduan.Topics.Substring(0, 78), " ...")
+                                                }
+                                                else
+                                                {
+                                                    @aduan.Topics
+                                                }
+                                            }
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="p-2">
+                                                <span class="fas fa-calendar-alt">
+                                                    @aduan.allocatedDate
+                                                </span>
+                                            </div>
+                                            <div class="p-2">
+
+                                                @{
+                                                    if (aduan.Hide == "0")
+                                                    {
+                                                        <span class="fas fa-user-tag">
+                                                            @String.Concat(@aduan.NamaDepan, " ", @aduan.NamaBelakang)
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fas fa-user-tag">
+                                                            Anonim
+                                                        </span>
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+
+                                        @{
+                                            if (aduan.Desc.Length > 200)
+                                            {
+                                                @String.Concat(@aduan.Desc.Substring(0, 295), " [...]")
+
+                                            }
+                                            else
+                                            {
+                                                @aduan.Desc
+                                            }
+                                        }
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-flex mb-3">
+                                            <div class="p-2">
+                                                <a href="#!">
+                                                    <i class="fas fa-heart"></i> 0
+                                                    Dukungan
+                                                </a>
+                                            </div>
+                                            <div class="p-2 ml-auto">
+                                                <a href="aduan/detail/@aduan.ID">
+                                                    <span class="badge" style="background-image:url(/img/readmore.png);">
+                                                        Selengkapnya
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        @Html.PagedListPager((IPagedList)ViewBag.AllComplaint, page =>
+                               Url.Action("Index", new { page = page }),
+                               new PagedListRenderOptions {
+                                   LiElementClasses = new string[] { "page-item" },
+                                   PageClasses = new string[] { "page-link" }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- kolom samping -->
+        <div class="col-4">
+            <div class="sticky-top">
+                <div class="section">
+                    <div class="container">
+
+                        <div class="d-flex flex-column">
+
+                            <div class="p-2">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <label>Penulusuran Aduan</label>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="input-group no-border">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-hashtag"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="ID Aduan .." style="height: auto;" id="idTrack" onkeyup="typeID()">
+                                        </div>
+                                        <div class="col text-center">
+                                            <button class="btn btn-primary btn-round" id="btnTrack" onclick="redirect()">Lacak</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-2">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <label>Statistik Aduan</label>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="d-flex flex-row">
+                                            <div class="p-2">
+                                                <span class="badge badge-info">Baru</span>
+                                            </div>
+                                            <div class="p-2 ml-auto">
+                                                @ViewData["baru"]
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row">
+                                            <div class="p-2">
+                                                <span class="badge badge-danger">Proses</span>
+                                            </div>
+                                            <div class="p-2 ml-auto">
+                                                @ViewData["proses"]
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row">
+                                            <div class="p-2">
+                                                <span class="badge badge-success">Selesai</span>
+                                            </div>
+                                            <div class="p-2 ml-auto">
+                                                @ViewData["selesai"]
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row">
+                                            <div class="p-2">
+                                                <span class="badge badge-default">Total Aduan</span>
+                                            </div>
+                                            <div class="p-2 ml-auto">
+                                                @ViewData["total"]
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('#idTrack').value = "";
+            $('#btnTrack').prop('disabled', true);
+
+            LoadFrmRegis();
+        })
+
+        function LoadFrmRegis()
+        {
+            $.get('@Url.Action("register", "Home")', null, function (result) {
+                $('#dvregis').html(result);
+                $.validator.unobtrusive.parse('#form-regis');
+
+                $('#btnSimpan').click(function () {
+                    ProsesRegis();
+                })
+            })
+        }
+
+        function ProsesRegis()
+        {
+            if ($('#form-regis').valid()) {
+                $.post('@Url.Action("register", "Home")', $('#form-regis').serializeArray(), function (result) {
+                    if (result == '00') {
+                        $('#loginModal').modal('hide');
+
+                        Swal.fire(
+                            'Register Berhasil !',
+                            'Silahkan masuk untuk memulai.',
+                            'success'
+                        )
+
+                    }
+                    else {
+                        Swal.fire(
+                            'Register Gagal !',
+                            'Email sudah pernah digunakan atau silahkan menghubungi admin',
+                            'error'
+                        )
+                    }
+                })
+            }
+        }
+
+        function typeID() {
+            var x = document.getElementById("idTrack");
+            if (x == "") {
+                $('#btnTrack').prop('disabled', true);
+            } else {
+                $('#btnTrack').prop('disabled', false);
+            }
+        }
+
+        function redirect() {
+            var id = document.getElementById("idTrack").value;
+            if (id.charAt(0) === "#") {
+                id = id.substring(1);
+            }
+            window.location.href = '/aduan/detail/' + id;
+        }
+    </script>
+
+}

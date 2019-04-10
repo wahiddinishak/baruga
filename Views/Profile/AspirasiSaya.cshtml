@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewData["Title"] = "Aspirasi Saya";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+}
+
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <!-- list aduan -->
+            <div class="section">
+                <div class="container">
+                    <div class="d-flex" style="margin-top: -20px;">
+                        <div class="p-2">
+                            <h6>Aspirasi Saya</h6>
+                        </div>
+                        <div class="p-2 ml-auto" style="margin-top: -15px;">
+                            <div class="input-group no-border">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Cari .." style="height: auto;">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @{
+                        if (Enumerable.Count(ViewBag.AllComplaint) > 0)
+                        {
+                            <div class="d-flex flex-column justify-content-center">
+                                @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.AllComplaint)
+                                {
+                                    <div class="p-2">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <a href="@String.Concat("/aduan/detail/", @aduan.ID)" style="color:white;">
+                                                    @{
+                                                        if (@aduan.Topics.Length > 81)
+                                                        {
+                                                            @String.Concat(@aduan.Topics.Substring(0, 78), " ...")
+                                                        }
+                                                        else
+                                                        {
+                                                            @aduan.Topics
+                                                        }
+                                                    }
+                                                </a>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="p-2">
+                                                        <span class="fas fa-calendar-alt">
+                                                            @aduan.allocatedDate
+                                                        </span>
+                                                    </div>
+                                                    <div class="p-2">
+
+                                                        @{
+                                                            if (aduan.Hide == "0")
+                                                            {
+                                                                <span class="fas fa-user-tag">
+                                                                    @String.Concat(@aduan.NamaDepan, " ", @aduan.NamaBelakang)
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="fas fa-user-tag">
+                                                                    Anonim
+                                                                </span>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                </div>
+
+                                                @{
+                                                    if (aduan.Desc.Length > 200)
+                                                    {
+                                                        @String.Concat(@aduan.Desc.Substring(0, 295), " [...]")
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @aduan.Desc
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="d-flex mb-3">
+                                                    <div class="p-2">
+                                                        <a href="#!">
+                                                            <i class="fas fa-heart"></i> 0
+                                                            Dukungan
+                                                        </a>
+                                                    </div>
+                                                    <div class="p-2 ml-auto">
+                                                        <a href="aduan/detail/@aduan.ID">
+                                                            <span class="badge" style="background-image:url(/img/readmore.png);">
+                                                                Selengkapnya
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                @Html.PagedListPager((IPagedList)ViewBag.AllComplaint, page =>
+                                       Url.Action("AspirasiSaya", new { page = page }),
+                                       new PagedListRenderOptions {
+                                           LiElementClasses = new string[] { "page-item" },
+                                           PageClasses = new string[] { "page-link" }
+                                })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex flex-column justify-content-center">
+                                <div class="text-center" style="margin-top: 10px;">
+                                    <h5>
+                                        Oh yaa, sepertinya Saya belum pernah menyampaikan aspirasi.
+                                    </h5>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <img src="~/img/notlisted.png" />
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

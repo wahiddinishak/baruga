@@ -1,0 +1,448 @@
+﻿@model trComplaintLv1
+
+@using Microsoft.AspNetCore.Http
+
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Home";
+}
+
+
+@section Header  {
+    <link href="~/css/dropzone.css" rel="stylesheet" />
+}
+
+
+<!-- panel aduan pintas -->
+<div class="section">
+    <div class="container">
+        <div class="aduan-container">
+            <div class="card card-aduan">
+                <div class="card-body" style="margin-top: 25px;">
+
+                    <form asp-controller="Home" asp-action="aduanPost" id="form-aduan">
+                        <div class="input-group no-border">
+                            <textarea rows="6" class="form-control" style="overflow: hidden;"
+                                      placeholder="Ketik aspirasi Anda.." asp-for="desc" id="aspirasi"></textarea>
+                            <span asp-validation-for="desc" style="color: red;"></span>
+                        </div>
+
+                        <div class="input-group no-border">
+                            <textarea rows="6" class="form-control" style="overflow: hidden;"
+                                      placeholder="Detail Lokasi.." asp-for="descLocation" id="descloc"></textarea>
+                            <span asp-validation-for="descLocation" style="color: red;"></span>
+                        </div>
+
+                        <div class="input-group no-border">
+                            <select class="form-control form-control-lg" id="pilihkabkot" onchange="LoadKec($('#pilihkabkot').val())" asp-for="kabkot">
+                                <option value="" hidden disabled selected style="height: auto;">Kabupaten / Kota</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group no-border">
+                            <select class="form-control form-control-lg" id="pilihkec" asp-for="kec">
+                                <option value="" hidden disabled selected style="height: auto;">Kecamatan</option>
+                            </select>
+                        </div>
+
+                    </form>
+
+                    <!-- upload gambar -->
+                    @*<form action="Home/UploadFiles" class="dropzone" id="uploadGambar" style="display:none"></form>*@
+
+                    <div id="uploadGambar" style="display:none">
+                        <div class="dropzone dz-clickable dz-started dz-message"></div>
+                    </div>
+
+                        <div class="dz-preview dz-file-preview">
+                            <div class="dz-details">
+                                <div class="dz-filename"><span data-dz-name></span></div>
+                                <div class="dz-size" data-dz-size></div>
+                                <img data-dz-thumbnail />
+                            </div>
+                        </div>
+
+                <div class="card-footer">
+                    <div class="container">
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2 mr-auto">
+                                <button class="btn btn-primary btn-round" type="button" onclick="gambarToggle()">
+                                    <i class="fas fa-paperclip"></i> Lampiran
+                                </button>
+                            </div>
+                            <div class="p-2">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="anonim">
+                                        <span class="form-check-sign"></span>
+                                        Anonim
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-2">
+                                <button class="btn btn-primary btn-round" type="button" id="btnKirim" onclick="ProsesAduan()">
+                                    <i class="fas fa-paper-plane"></i> Kirim
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- step info -->
+<div class="section mt-3">
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="row bs-wizard" style="border-bottom:0;">
+
+                <div class="col-xs-2 col-xs-offset-1 bs-wizard-step">
+                    <div class="text-center bs-wizard-stepnum">Tulis Aduan</div>
+                    <div class="progress"></div>
+                    <span class="bs-wizard-dot">
+                        <i class="fas fa-pencil-alt fa-2x"></i>
+                    </span>
+                    <div class="bs-wizard-info text-center">Adukan keluhan atau aspirasi anda dengan jelas dan lengkap</div>
+                </div>
+
+                <div class="col-xs-2 bs-wizard-step">
+                    <div class="text-center bs-wizard-stepnum">Moderasi</div>
+                    <div class="progress"></div>
+                    <span class="bs-wizard-dot">
+                        <i class="fas fa-tasks fa-2x"></i>
+                    </span>
+                    <div class="bs-wizard-info text-center">
+                        Aduan Anda akan diperiksa dan diteruskan kepada instansi berwenang
+                    </div>
+                </div>
+
+                <div class="col-xs-2 bs-wizard-step">
+                    <div class="text-center bs-wizard-stepnum">Tindak Lanjut</div>
+                    <div class="progress"></div>
+                    <span class="bs-wizard-dot">
+                        <i class="fas fa-comments fa-2x"></i>
+                    </span>
+                    <div class="bs-wizard-info text-center">Instansi akan menindaklanjuti dan membalas Aduan Anda </div>
+                </div>
+
+                <div class="col-xs-2 bs-wizard-step">
+                    <div class="text-center bs-wizard-stepnum">Tanggapan</div>
+                    <div class="progress"></div>
+                    <span class="bs-wizard-dot">
+                        <i class="fas fa-comment fa-2x"></i>
+                    </span>
+                    <div class="bs-wizard-info text-center">
+                        Anda dapat menanggapi kembali balasan yang diberikan oleh instansi
+                    </div>
+                </div>
+
+                <div class="col-xs-2 bs-wizard-step">
+                    <div class="text-center bs-wizard-stepnum">Selesai</div>
+                    <div class="progress"></div>
+                    <span class="bs-wizard-dot">
+                        <i class="fas fa-check fa-2x"></i>
+                    </span>
+                    <div class="bs-wizard-info text-center">Aduan Anda akan terus ditindaklanjuti hingga terselesaikan</div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mb-3">
+                <div class="p-2">
+                    <a asp-area="" asp-controller="tentang" asp-action="index" class="btn btn-primary btn-round">
+                        Pelajari Lebih Lanjut
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- aduan terbaru -->
+<div class="section-aduan">
+    <div class="container">
+        <h4 class="title">Aduan Terbaru</h4>
+        <div class="d-flex mb-3" id="caseTop"></div>
+        <div class="d-flex justify-content-center mb-3">
+            <div class="p-2">
+                <a asp-area="" asp-controller="aduan" asp-action="index" class="btn btn-primary btn-round">
+                    Baca Selengkapnya
+                </a>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<!-- tracking -->
+<div class="section" id="track">
+    <div class="container text-center">
+        <div class="mg-0 mg-b-30">
+            <h3>TELUSURI ADUAN</h3>
+        </div>
+        <div class="input-group no-border">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-hashtag"></i>
+                </span>
+            </div>
+            <input type="text" class="form-control" placeholder="ID Aduan .." style="height: auto;" id="idTrack" onkeyup="typeID()">
+        </div>
+        <button class="btn btn-primary btn-round" id="btnTrack" onclick="redirect()">Lacak</button>
+    </div>
+</div>
+
+<!-- counter aduan -->
+<div class="section" style="background-image:url('./img/pattern.jpg');">
+    <div class="container">
+        <div class="text-center mg-0 mg-b-30" style="color: white">
+            <h3>JUMLAH ADUAN SEKARANG</h3>
+        </div>
+        <div class="row-flex flex-tablet text-center">
+            <div class="font-weight-bold text-white h1">
+                <span class="numscroller" data-min='1' data-max='@ViewData["totalCase"]' data-delay='2' data-increment='1'></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- counter opd -->
+<div class="section">
+    <div class="container text-center">
+        <div>
+            <h3>ORGANISASI PERANGKAT DAERAH TERHUBUNG</h3>
+        </div>
+
+        <div class="d-inline-flex p-3">
+            <div class="p-2">
+                <div class="font-weight-bold h1">
+                    <span class="numscroller" data-min='1' data-max='@ViewData["OPDProv"]' data-delay='2' data-increment='5'></span><br>
+                </div>
+                OPD Provinsi
+            </div>
+            <div class="p-2">
+                <div class="font-weight-bold h1">
+                    <span class="numscroller" data-min='1' data-max='@ViewData["PemKabKot"]' data-delay='2' data-increment='2'></span>
+                </div>
+                Pemerintah Kabupaten dan Kota
+            </div>
+            <div class="p-2">
+                <div class="font-weight-bold h1">
+                    <span class="numscroller" data-min='1' data-max='@ViewData["OPDKabkot"]' data-delay='2' data-increment='3'></span>
+                </div>
+                OPD Kabupaten dan Kota
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            LoadCaseTop3();
+            LoadKabKot();
+            LoadFrmRegis();
+
+            $('#idTrack').value = "";
+            $('#btnTrack').prop('disabled', true);
+
+
+            Dropzone.autoDiscover = false;
+            //Simple Dropzonejs 
+            $("#uploadGambar").dropzone({
+                url: "Home/UploadFiles",
+                addRemoveLinks: true
+            });
+
+            //var previewNode = document.querySelector("#template");
+            //previewNode.id = "";
+            //var previewTemplate = previewNode.parentNode.innerHTML;
+            //previewNode.parentNode.removeChild(previewNode);
+
+
+        });
+        
+        function ProsesAduan()
+        {
+            if ($('#form-aduan').valid()) {
+                $.post('@Url.Action("aduanProses", "Home")', $('#form-aduan').serializeArray(), function (result) {
+                    if (result == '00')
+                    {
+                        Swal.fire(
+                            'Berhasil !',
+                            'Aspirasi akan dimoderasi oleh admin',
+                            'success'
+                        )
+
+                        document.getElementById("aspirasi").value = "";
+                        document.getElementById("descloc").value = "";
+
+                    } else if (result = '01')
+                    {
+                        window.location = 'Home/wizard';
+                    } else
+                    {
+                        Swal.fire(
+                            'Gagal !',
+                            'Aspirasi gagal terkirim !',
+                            'error'
+                        )
+                    }
+                })
+            }
+        }
+
+        function LoadFrmRegis()
+        {
+            $.get('@Url.Action("register", "Home")', null, function (result) {
+                $('#dvregis').html(result);
+                $.validator.unobtrusive.parse('#form-regis');
+
+                $('#btnSimpan').click(function () {
+                    ProsesRegis();
+                })
+            })
+        }
+
+        function ProsesRegis()
+        {
+            if ($('#form-regis').valid()) {
+                $.post('@Url.Action("register", "Home")', $('#form-regis').serializeArray(), function (result) {
+                   if (result == '00') {
+                        $('#loginModal').modal('hide');
+                        Swal.fire(
+                            'Register Berhasil !',
+                            'Silahkan masuk untuk memulai.',
+                            'success'
+                       )
+                       document.getElementById("namaD").value = "";
+                       document.getElementById("namaB").value = "";
+                       document.getElementById("addr").value = "";
+                       document.getElementById("phon").value = "";
+                       document.getElementById("mail").value = "";
+                       document.getElementById("pass").value = "";
+                    }
+                    else {
+                        Swal.fire(
+                            'Register Gagal !',
+                            'Email sudah pernah digunakan atau silahkan menghubungi admin',
+                            'error'
+                        )
+                    }
+                })
+            }
+        }
+
+        function typeID() {
+            var x = document.getElementById("idTrack");
+            if (x == "") {
+                $('#btnTrack').prop('disabled', true);
+            } else {
+                $('#btnTrack').prop('disabled', false);
+            }
+        }
+
+        function redirect() {
+            var id = document.getElementById("idTrack").value;
+            if (id.charAt(0) === "#") {
+                id = id.substring(1);
+            }
+            window.location.href = '/aduan/detail/' + id;
+        }
+
+        function LoadCaseTop3() {
+            $.get('@Url.Action("getCaseTop3", "Home")', null, function (result) {
+                var card, Topik, Uraian, nama, href;
+                $.each(result, function (i, item) {
+
+                    if (item.Topics.length > 37) {
+                        Topik = item.Topics.substring(0, 37) + ' ...';
+                    } else {
+                        Topik = item.Topics;
+                    };
+
+                    if (item.Desc.length > 147) {
+                        Uraian = item.Desc.substring(0, 147) + ' ...';
+                    } else {
+                        Uraian = item.Desc;
+                    };
+
+                    if (item.Hide == 1) {
+                        nama = '&nbsp;' + 'Anonim';
+                    } else {
+                        nama = '&nbsp;' + item.NamaDepan + '&nbsp;' + item.NamaBelakang;
+                    }
+                    
+                    href = '/aduan/detail/' + item.ID + '';
+
+                    card = '<div class="p-2"> <div class="card" style="width: 22rem;"> <div class="card-header">';
+                    card += '<a href="' + href +'" style="color:white;">' + Topik +'</a></div>';
+                    card += '<div class="card-body">'+ Uraian +'</div>';
+                    card += '<div class="card-footer"><div class="d-flex"><div class="p-2">';
+                    card += '<span class="fas fa-user-tag"><label> '+ nama +'</label></span></div>';
+                    card += '<div class="p-2 ml-auto"><a href="' + href +'"><span class="badge" style="background-image:url(/img/readmore.png);">Selengkapnya</span></a></div></div></div></div></div>';
+
+                    $('#caseTop').append(card);
+                })
+            })
+        }
+
+        function LoadKabKot() {
+
+                $.get('@Url.Action("getKabKot", "Home")', null, function (result) {
+
+                    $('#pilihkabkot')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option value="" hidden disabled selected style="height: auto;">Kabupaten / Kota</option>')
+                        .val('')
+
+                    for (var i = 0, len = result.length; i < len; i++) {
+                                $('#pilihkabkot').append($('<option>', {
+                                    value: result[i].idKabKot,
+                                    text: result[i].name
+                                }))
+                    };
+            })
+        }
+
+        function LoadKec(kabkot) {
+            $.get('@Url.Action("getKec", "Home")?idKabKot=' + kabkot + '', null, function (result) {
+
+                $('#pilihkec')
+                    .find('option')
+                    .remove()
+                    .end()
+                    .append('<option value="" hidden disabled selected style="height: auto;">Kecamatan</option>')
+                    .val('')
+
+                    for (var i = 0, len = result.length; i < len; i++) {
+                                $('#pilihkec').append($('<option>', {
+                                    value: result[i].idKec,
+                                    text: result[i].name
+                                }))
+                };
+            })
+        }
+
+        function gambarToggle() {
+            var x = document.getElementById("uploadGambar");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+    </script>
+
+
+    <!-- Plugin -->
+    <script src="~/js/numscroller-1.0.js" type="text/javascript"></script>
+    <script src="~/js/dropzone.js" type="text/javascript"></script>
+}

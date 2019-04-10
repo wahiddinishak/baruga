@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Aduan Tidak Ditemukan";
+    Layout = "_DetailLayout";
+}
+
+<!-- konten aduan -->
+<div class="section">
+    <label class="h5">
+        <b>
+            Hasil Penelusuran ID : #@ViewData["id"]
+        </b>
+    </label>
+    <div class="d-flex" style="margin-bottom: -70px;">
+        <div class="text-center" style="margin-top: 150px;">
+            <h1>Opps!</h1>
+            <p>
+                Pencarian anda dalam tahap moderasi atau tidak ditemukan,
+                silahkan melakukan penelusuran kembali.
+            </p>
+        </div>
+        <div style="margin-top: -50px;">
+            <img src="~/img/notfound.png" />
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary btn-round" onclick="window.history.back()">Kembali ke halaman sebelumnya.</button>
+    </div>
+</div>

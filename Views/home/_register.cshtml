@@ -1,0 +1,37 @@
+@model msUsersPelapor
+
+<form asp-controller="Home" asp-action="register" id="form-regis">
+
+    <div class="input-group no-border">
+        <input type="text" class="form-control" placeholder="Nama Depan" asp-for="namaDepan" id="namaD">
+        <span asp-validation-for="namaDepan" style="color: red;"></span>
+    </div>
+    <div class="input-group no-border">
+        <input type="text" class="form-control" placeholder="Nama Belakang" asp-for="namaBelakang" id="namaB">
+       
+    </div>
+    <div class="input-group no-border">
+        <textarea class="form-control" placeholder="Alamat" asp-for="address" id="addr"></textarea>
+        <span asp-validation-for="address" style="color: red;"></span>
+    </div>
+    <div class="input-group no-border">
+        <input type="text" class="form-control" placeholder="No Telepon" asp-for="phone" id="phon">
+        <span asp-validation-for="phone" style="color: red;"></span>
+    </div>
+    <div class="input-group no-border">
+        <input type="text" class="form-control" placeholder="Email" asp-for="email" id="mail">
+        <span asp-validation-for="email" style="color: red;"></span>
+    </div>
+    <div class="input-group no-border">
+        <input type="password" class="form-control" placeholder="Password" asp-for="password" id="pass">
+        <span asp-validation-for="password" style="color: red;"></span>
+    </div>
+
+</form>
+
+
+<button id="btnSimpan" class="btn btn-primary btn-round btn-block">Register</button>
+
+
+
+

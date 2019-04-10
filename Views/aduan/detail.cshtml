@@ -1,0 +1,224 @@
+﻿@model trComplaintLv1
+
+@{
+    @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.oneCase)
+    {
+        ViewData["Title"] = aduan.Topics;
+    }
+    Layout = "_DetailLayout";
+}
+
+<div class="section">
+    <div class="card">
+
+        @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.oneCase)
+        {
+            <div class="card-header" style="background-color: white; color: black;">
+                <label class="h5">
+                    <b>
+                        ID : #@aduan.ID
+                    </b>
+                </label>
+                <div class="d-flex" justify-content-end style="background-color: lightgray;">
+                    <div class="p-2 mr-auto"><label><b>@aduan.Topics</b></label></div>
+                    <div class="p-2">
+                        <span class="fas fa-calendar-alt">
+                            <label>
+                                @String.Concat(" ", @aduan.allocatedDate)
+                            </label>
+                        </span>
+                    </div>                    
+                    <div class="p-2">
+                        @{
+                            if (@aduan.Status == "2")
+                            {
+                                <span class="badge badge-success">
+                                    Selesai
+                                </span>
+                            }
+                            else if (@aduan.Status == "1")
+                            {
+                                <span class="badge badge-danger">
+                                    Proses
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-info">
+                                    Baru
+                                </span>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" style="margin-top: -20px;">
+                <p class="p-2">
+                    @aduan.Desc
+                </p>
+
+                <div class="d-flex">
+                    @foreach (var idPicture in ViewBag.imgSebelum)
+                    {
+                        <a href="#" class="pop">
+                            <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc" 
+                                 class="shadow rounded-lg float-sm-left ml-2" 
+                                 alt="@idPicture.caption" 
+                                 style="width:70px; height:70px" />
+                        </a>
+                    }
+                </div>
+
+            </div>
+
+        }
+
+        <div class="card-footer">
+            <label class="h6 p-2">
+                <b>
+                    Tindak Lanjut :
+                </b>
+            </label>
+            <ul class="timeline">
+                @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.oneCase)
+                {
+
+                    if (aduan.Hide == "0")
+                    {
+
+                        <li>
+                            <label class="h6">Dibuat</label>
+                            <label class="float-right text-muted">@aduan.createdDate</label>
+                            <p>
+                                Dibuat oleh
+                                <b>
+                                    @String.Concat(@aduan.NamaDepan, " ", @aduan.NamaBelakang)
+                                </b>
+                            </p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <label class="h6">Dibuat</label>
+                            <label class="float-right text-muted">@aduan.createdDate</label>
+                            <p>
+                                Dibuat oleh
+                                <b>
+                                    Anonim
+                                </b>
+                            </p>
+                        </li>
+                    }
+
+                    if (aduan.allocatedDate != null)
+                    {
+                        <li>
+                            <label class="h6">Disposisi</label>
+                            <label class="float-right text-muted">@aduan.allocatedDate</label>
+                            <p>
+                                Didisposisi ke <b>@ViewData["opd"]</b>
+                            </p>
+                        </li>
+                        if (aduan.progressDate != null)
+                        {
+                            <li>
+                                <label class="h6">Proses</label>
+                                <label class="float-right text-muted">@aduan.progressDate</label>
+                                <p>
+                                    Diproses oleh <b>@ViewData["opd1"]</b>
+                                </p>
+                            </li>
+                            if (aduan.solvedDate != null)
+                            {
+                                <li>
+                                    <label class="h6">Selesai</label>
+                                    <label class="float-right text-muted">@aduan.solvedDate</label>
+                                    <p>
+                                         @*@aduan.response*@
+                                    </p>
+
+                                    <div class="d-flex">
+                                        @foreach (var idPicture in ViewBag.imgSesudah)
+                                        {
+                                            <a href="#" class="pop">
+                                                <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc" class="shadow rounded-lg float-sm-left ml-2" alt="@idPicture.caption" style="width:70px; height:70px" />
+                                            </a>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="" id="imagepreview"><hr />
+                <em id="caption"></em>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $('.pop').on('click', function () {
+                    var x = document.getElementById("caption");
+                    $('#imagepreview').attr('src', $(this).find('img').attr('src'));
+                    x.append($(this).find('img').attr('alt'));
+                    $('#imagemodal').modal('show');
+                });
+            });
+
+            LoadFrmRegis();
+        })
+
+        function LoadFrmRegis()
+        {
+            $.get('@Url.Action("register", "Home")', null, function (result) {
+                $('#dvregis').html(result);
+                $.validator.unobtrusive.parse('#form-regis');
+
+                $('#btnSimpan').click(function () {
+                    ProsesRegis();
+                })
+            })
+        }
+
+        function ProsesRegis()
+        {
+            if ($('#form-regis').valid()) {
+                $.post('@Url.Action("register", "Home")', $('#form-regis').serializeArray(), function (result) {
+                    if (result == '00') {
+                        $('#loginModal').modal('hide');
+
+                        Swal.fire(
+                            'Register Berhasil !',
+                            'Silahkan masuk untuk memulai.',
+                            'success'
+                        )
+
+                    }
+                    else {
+                        Swal.fire(
+                            'Register Gagal !',
+                            'Email sudah pernah digunakan atau silahkan menghubungi admin',
+                            'error'
+                        )
+                    }
+                })
+            }
+        }              
+
+    </script>
+}
