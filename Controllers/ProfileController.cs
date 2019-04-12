@@ -38,19 +38,19 @@ namespace barugaWeb.Controllers
             }
             else
             {
-
                 var pageNumber = page ?? 1;
                 var pageSize = 10;
 
                 var AllComplaint = (from a in db.trComplaintLv1s
-                                    where (a.deletedby == "" || a.deletedby == null) && a.allocatedDate != null && a.idUser == HttpContext.Session.GetInt32("_IDUser")
-                                    join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail
+                                    where (a.deletedby == "" || a.deletedby == null) && a.idUser == HttpContext.Session.GetInt32("_IDUser")
+                                    join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail into gj
+                                    from x in gj.DefaultIfEmpty()
                                     orderby a.idComplaintLv1 descending
                                     select new listAduan
                                     {
                                         ID = a.idComplaintLv1,
-                                        allocatedDate = a.allocatedDate,
-                                        Topics = b.name,
+                                        allocatedDate = a.complaintDate,
+                                        Topics = (x == null ? "Topik Aspirasi Sedang Tahap Moderasi" : x.name),
                                         Desc = a.desc,
                                         Hide = a.hideUser,
                                         NamaDepan = a.namaDepan,

@@ -21,7 +21,7 @@ namespace barugaWeb.Models
         public string allocatedDate { get; set; }
         public string progressDate { get; set; }
         public string solvedDate { get; set; }
-        public string allocated { get; set; }
+        public int allocated { get; set; }
 
         [Required(ErrorMessage = "Harap Isi !")]
         public string desc { get; set; }
@@ -30,8 +30,7 @@ namespace barugaWeb.Models
         public int idUser { get; set; }
         public string namaDepan { get; set; }
         public string namaBelakang { get; set; }
-
-        public string response { get; set; }
+        public string email { get; set; }
 
         public string status { get; set; }
 
@@ -42,5 +41,7 @@ namespace barugaWeb.Models
         [Required(ErrorMessage = "Harap Isi !")]
         public string descLocation { get; set; }
         public string  deletedby { get; set; }
+
+        public string createdBy { get; set; }
     }
 }

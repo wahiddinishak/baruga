@@ -117,17 +117,23 @@
                                             </div>
                                         </div>
 
-                                        @{
-                                            if (aduan.Desc.Length > 200)
-                                            {
-                                                @String.Concat(@aduan.Desc.Substring(0, 295), " [...]")
+                                        <div class="p-2">
+                                            <p>
+                                                @{
+                                                    if (aduan.Desc.Length > 200)
+                                                    {
+                                                        @String.Concat(@aduan.Desc.Substring(0, 295), " [...]")
 
-                                            }
-                                            else
-                                            {
-                                                @aduan.Desc
-                                            }
-                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @aduan.Desc
+                                                    }
+                                                }
+                                            </p>
+                                        </div>
+
+
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-flex mb-3">

@@ -24,7 +24,7 @@
                     <div class="p-2">
                         <span class="fas fa-calendar-alt">
                             <label>
-                                @String.Concat(" ", @aduan.allocatedDate)
+                                @String.Concat(" ", @aduan.createdDate)
                             </label>
                         </span>
                     </div>                    
@@ -53,10 +53,11 @@
                 </div>
             </div>
             <div class="card-body" style="margin-top: -20px;">
-                <p class="p-2">
-                    @aduan.Desc
-                </p>
-
+                <div class="p-2">
+                    <p>
+                        @aduan.Desc
+                    </p>
+                </div>
                 <div class="d-flex">
                     @foreach (var idPicture in ViewBag.imgSebelum)
                     {

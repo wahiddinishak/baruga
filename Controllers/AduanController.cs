@@ -27,7 +27,7 @@ namespace barugaWeb.Controllers
                                select new listAduan
                                {
                                    ID = a.idComplaintLv1,
-                                   allocatedDate = a.allocatedDate,
+                                   allocatedDate = a.complaintDate,
                                    Topics = b.name,
                                    Desc = a.desc,
                                    Hide = a.hideUser,
@@ -57,8 +57,9 @@ namespace barugaWeb.Controllers
         {
             // konten detail
             var oneCase = from a in db.trComplaintLv1s
-                          where (a.deletedby == "" || a.deletedby == null) && a.allocatedDate != null && a.idComplaintLv1 == id
-                          join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail
+                          where (a.deletedby == "" || a.deletedby == null) && a.idComplaintLv1 == id
+                          join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail into gj
+                          from x in gj.DefaultIfEmpty()
                           select new listAduan
                           {
                               ID = a.idComplaintLv1,
@@ -66,12 +67,11 @@ namespace barugaWeb.Controllers
                               allocatedDate = a.allocatedDate,
                               progressDate = a.progressDate,
                               solvedDate = a.solvedDate,
-                              Topics = b.name,
+                              Topics = (x == null ? "Topik Aspirasi Sedang Tahap Moderasi" : x.name),
                               Desc = a.desc,
                               Hide = a.hideUser,
                               NamaDepan = a.namaDepan,
-                              NamaBelakang = a.namaBelakang,
-                              // response = a.response,
+                              NamaBelakang = a.namaBelakang,                             
                               Status = a.status
                           };            
 

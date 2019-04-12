@@ -9,7 +9,7 @@
 
 
 @section Header  {
-    <link href="~/css/dropzone.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/uploader/fancy_fileupload.css">
 }
 
 
@@ -18,9 +18,8 @@
     <div class="container">
         <div class="aduan-container">
             <div class="card card-aduan">
-                <div class="card-body" style="margin-top: 25px;">
-
-                    <form asp-controller="Home" asp-action="aduanPost" id="form-aduan">
+                <form asp-controller="Home" asp-action="aduanPost" id="form-aduan">
+                    <div class="card-body" style="margin-top: 25px;">
                         <div class="input-group no-border">
                             <textarea rows="6" class="form-control" style="overflow: hidden;"
                                       placeholder="Ketik aspirasi Anda.." asp-for="desc" id="aspirasi"></textarea>
@@ -45,55 +44,44 @@
                             </select>
                         </div>
 
-                    </form>
-
-                    <!-- upload gambar -->
-                    @*<form action="Home/UploadFiles" class="dropzone" id="uploadGambar" style="display:none"></form>*@
-
-                    <div id="uploadGambar" style="display:none">
-                        <div class="dropzone dz-clickable dz-started dz-message"></div>
+                        <div id="uploadGambar" style="background-color: #EEEEEE; display:none;">
+                            <input id="fileupload" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple>
+                        </div>
                     </div>
 
-                        <div class="dz-preview dz-file-preview">
-                            <div class="dz-details">
-                                <div class="dz-filename"><span data-dz-name></span></div>
-                                <div class="dz-size" data-dz-size></div>
-                                <img data-dz-thumbnail />
-                            </div>
-                        </div>
-
-                <div class="card-footer">
-                    <div class="container">
-                        <div class="d-flex justify-content-end">
-                            <div class="p-2 mr-auto">
-                                <button class="btn btn-primary btn-round" type="button" onclick="gambarToggle()">
-                                    <i class="fas fa-paperclip"></i> Lampiran
-                                </button>
-                            </div>
-                            <div class="p-2">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" id="anonim">
-                                        <span class="form-check-sign"></span>
-                                        Anonim
-                                    </label>
+                    <div class="card-footer">
+                        <div class="container">
+                            <div class="d-flex justify-content-end">
+                                <div class="p-2 mr-auto">
+                                    <button class="btn btn-primary btn-round" type="button" onclick="gambarToggle()">
+                                        <i class="fas fa-paperclip"></i> Lampiran
+                                    </button>
+                                </div>
+                                <div class="p-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" id="anonim" asp-for="hideUser">
+                                            <span class="form-check-sign"></span>
+                                            Anonim
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <button class="btn btn-primary btn-round" type="button" id="btnKirim" onclick="ProsesAduan()">
+                                        <i class="fas fa-paper-plane"></i> Kirim
+                                    </button>
                                 </div>
                             </div>
-                            <div class="p-2">
-                                <button class="btn btn-primary btn-round" type="button" id="btnKirim" onclick="ProsesAduan()">
-                                    <i class="fas fa-paper-plane"></i> Kirim
-                                </button>
-                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 <!-- step info -->
-<div class="section mt-3">
+<div class="section mt-5">
     <div class="container">
         <div class="col-sm-12">
             <div class="row bs-wizard" style="border-bottom:0;">
@@ -250,22 +238,14 @@
             $('#idTrack').value = "";
             $('#btnTrack').prop('disabled', true);
 
-
-            Dropzone.autoDiscover = false;
-            //Simple Dropzonejs 
-            $("#uploadGambar").dropzone({
-                url: "Home/UploadFiles",
-                addRemoveLinks: true
+            $('#fileupload').FancyFileUpload({
+                params: {
+                    action: 'fileuploader'
+                },
+                maxfilesize: 1000000
             });
-
-            //var previewNode = document.querySelector("#template");
-            //previewNode.id = "";
-            //var previewTemplate = previewNode.parentNode.innerHTML;
-            //previewNode.parentNode.removeChild(previewNode);
-
-
         });
-        
+
         function ProsesAduan()
         {
             if ($('#form-aduan').valid()) {
@@ -281,10 +261,11 @@
                         document.getElementById("aspirasi").value = "";
                         document.getElementById("descloc").value = "";
 
-                    } else if (result = '01')
+                    } else if (result == '01')
                     {
                         window.location = 'Home/wizard';
-                    } else
+
+                    } else if (result == '99')
                     {
                         Swal.fire(
                             'Gagal !',
@@ -376,12 +357,12 @@
                     } else {
                         nama = '&nbsp;' + item.NamaDepan + '&nbsp;' + item.NamaBelakang;
                     }
-                    
+
                     href = '/aduan/detail/' + item.ID + '';
 
                     card = '<div class="p-2"> <div class="card" style="width: 22rem;"> <div class="card-header">';
                     card += '<a href="' + href +'" style="color:white;">' + Topik +'</a></div>';
-                    card += '<div class="card-body">'+ Uraian +'</div>';
+                    card += '<div class="card-body"> <div class="p-2"><p>'+ Uraian +'</p></div></div>';
                     card += '<div class="card-footer"><div class="d-flex"><div class="p-2">';
                     card += '<span class="fas fa-user-tag"><label> '+ nama +'</label></span></div>';
                     card += '<div class="p-2 ml-auto"><a href="' + href +'"><span class="badge" style="background-image:url(/img/readmore.png);">Selengkapnya</span></a></div></div></div></div></div>';
@@ -444,5 +425,10 @@
 
     <!-- Plugin -->
     <script src="~/js/numscroller-1.0.js" type="text/javascript"></script>
-    <script src="~/js/dropzone.js" type="text/javascript"></script>
+
+    <script src="~/uploader/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="~/uploader/jquery.fileupload.js" type="text/javascript"></script>
+    <script src="~/uploader/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="~/uploader/jquery.fancy-fileupload.js"type="text/javascript"></script>
+
 }

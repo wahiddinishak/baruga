@@ -62,7 +62,7 @@ namespace barugaWeb.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult aduanProses([Bind("idComplaintSource,complaintDate,desc,hideUser,idUser,prov,kabkot,kec,descLocation,allocated")] trComplaintLv1 Data)
+        public IActionResult aduanProses([Bind("idComplaintSource,desc,hideUser,idUser,prov,kabkot,kec,descLocation,allocated")] trComplaintLv1 Data)
         {
             if (ModelState.IsValid)
             {
@@ -70,29 +70,40 @@ namespace barugaWeb.Controllers
                 {
                     if (string.IsNullOrEmpty(HttpContext.Session.GetString("_Name")))
                     {
-                        
                         return Content("01");
                     }
                     else
                     {
                         var idusr = HttpContext.Session.GetInt32("_IDUser").Value;
-                        Data.idUser = idusr;
 
-                        Data.complaintDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-                        Data.allocated = "0";
+                        var userInfo = db.msUsersPelapors.Where(a => a.idUserPelapor == idusr).ToList();                        
+                        Data.idUser = idusr;
+                        Data.namaDepan = userInfo[0].namaDepan;
+                        Data.namaBelakang = userInfo[0].namaBelakang;
+                        Data.email = userInfo[0].email;
+                        Data.complaintDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        Data.allocated = 0;
                         Data.prov = 1;
                         Data.idComplaintSource = 2;
-                        Data.hideUser = "0";
+                        Data.createdBy = HttpContext.Session.GetString("_Name").ToString();
 
+                        if (Data.hideUser == "true")
+                        {
+                            Data.hideUser = "1";
+                        }else
+                        {
+                            Data.hideUser = "0";
+                        }
+                        
                         db.trComplaintLv1s.Add(Data);
                         db.SaveChanges();
 
                         return Content("00");
                     }
                 }
-                catch
+                catch (Exception)
                 {
-                    return Content("99");
+                    throw;
                 }
             }
 
