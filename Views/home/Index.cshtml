@@ -4,7 +4,7 @@
 
 @{
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Beranda";
 }
 
 
@@ -45,8 +45,9 @@
                         </div>
 
                         <div id="uploadGambar" style="background-color: #EEEEEE; display:none;">
-                            <input id="fileupload" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple>
+                            <input id="fileupload" type="file" name="files" accept=".jpg, .png, .jpeg, .bmp, .pdf" multiple>
                         </div>
+
                     </div>
 
                     <div class="card-footer">
@@ -154,7 +155,7 @@
         <div class="d-flex mb-3" id="caseTop"></div>
         <div class="d-flex justify-content-center mb-3">
             <div class="p-2">
-                <a asp-area="" asp-controller="aduan" asp-action="index" class="btn btn-primary btn-round">
+                <a asp-area="" asp-controller="aspirasi" asp-action="index" class="btn btn-primary btn-round">
                     Baca Selengkapnya
                 </a>
             </div>
@@ -242,7 +243,7 @@
                 params: {
                     action: 'fileuploader'
                 },
-                maxfilesize: 1000000
+                maxfilesize: 20000000
             });
         });
 
@@ -332,7 +333,7 @@
             if (id.charAt(0) === "#") {
                 id = id.substring(1);
             }
-            window.location.href = '/aduan/detail/' + id;
+            window.location.href = '/aspirasi/detail/' + id;
         }
 
         function LoadCaseTop3() {
@@ -358,7 +359,7 @@
                         nama = '&nbsp;' + item.NamaDepan + '&nbsp;' + item.NamaBelakang;
                     }
 
-                    href = '/aduan/detail/' + item.ID + '';
+                    href = '/aspirasi/detail/' + item.ID + '';
 
                     card = '<div class="p-2"> <div class="card" style="width: 22rem;"> <div class="card-header">';
                     card += '<a href="' + href +'" style="color:white;">' + Topik +'</a></div>';

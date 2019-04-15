@@ -40,7 +40,7 @@
                                     <div class="p-2">
                                         <div class="card">
                                             <div class="card-header">
-                                                <a href="@String.Concat("/aduan/detail/", @aduan.ID)" style="color:white;">
+                                                <a href="@String.Concat("/aspirasi/detail/", @aduan.ID)" style="color:white;">
                                                     @{
                                                         if (@aduan.Topics.Length > 81)
                                                         {
@@ -107,7 +107,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="p-2 ml-auto">
-                                                        <a href="aduan/detail/@aduan.ID">
+                                                        <a href="@String.Concat("/aspirasi/detail/", @aduan.ID)">
                                                             <span class="badge" style="background-image:url(/img/readmore.png);">
                                                                 Selengkapnya
                                                             </span>

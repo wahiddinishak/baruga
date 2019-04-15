@@ -13,10 +13,7 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\baru
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.TagHelpers.input.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.TagHelpers.output.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.RazorCoreGenerate.cache
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\aduan\detail.g.cshtml.cs
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\aduan\Index.g.cshtml.cs
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\aduan\_detailnotfound.g.cshtml.cs
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\aduan\_register.g.cshtml.cs
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\Aspirasi\Index.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\home\Index.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\home\wizard.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\home\_aduanPost.g.cshtml.cs
@@ -38,4 +35,6 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\baru
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.dll
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.pdb
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.csproj.CopyComplete
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\Aspirasi\detail.g.cshtml.cs
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\Razor\Views\Aspirasi\_detailnotfound.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.csprojAssemblyReference.cache

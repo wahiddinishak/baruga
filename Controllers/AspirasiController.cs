@@ -10,31 +10,31 @@ using System.Diagnostics;
 
 namespace barugaWeb.Controllers
 {
-    public class AduanController : Controller
+    public class AspirasiController : Controller
     {
 
         barugaContext db = new barugaContext();
-        
+
         public IActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
             var AllComplaint = (from a in db.trComplaintLv1s
-                               where (a.deletedby == "" || a.deletedby == null) && a.allocatedDate != null
-                               join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail
-                               orderby a.idComplaintLv1 descending
-                               select new listAduan
-                               {
-                                   ID = a.idComplaintLv1,
-                                   allocatedDate = a.complaintDate,
-                                   Topics = b.name,
-                                   Desc = a.desc,
-                                   Hide = a.hideUser,
-                                   NamaDepan = a.namaDepan,
-                                   NamaBelakang = a.namaBelakang,
-                                   Status = a.status
-                               }).ToList();
+                                where (a.deletedby == "" || a.deletedby == null) && a.allocatedDate != null
+                                join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail
+                                orderby a.idComplaintLv1 descending
+                                select new listAduan
+                                {
+                                    ID = a.idComplaintLv1,
+                                    allocatedDate = a.complaintDate,
+                                    Topics = b.name,
+                                    Desc = a.desc,
+                                    Hide = a.hideUser,
+                                    NamaDepan = a.namaDepan,
+                                    NamaBelakang = a.namaBelakang,
+                                    Status = a.status
+                                }).ToList();
 
             ViewBag.AllComplaint = AllComplaint.ToPagedList(pageNumber, pageSize);
 
@@ -71,15 +71,16 @@ namespace barugaWeb.Controllers
                               Desc = a.desc,
                               Hide = a.hideUser,
                               NamaDepan = a.namaDepan,
-                              NamaBelakang = a.namaBelakang,                             
+                              NamaBelakang = a.namaBelakang,
                               Status = a.status
-                          };            
+                          };
 
-            if ( oneCase.Count() < 1 )
+            if (oneCase.Count() < 1)
             {
                 ViewData["id"] = id;
                 return PartialView("_detailnotfound", ViewData["id"]);
-            } else
+            }
+            else
             {
                 ViewBag.oneCase = oneCase.ToList();
 
@@ -151,11 +152,7 @@ namespace barugaWeb.Controllers
                 ViewBag.imgSesudah = db.trComplaintPictures.Where(a => a.imgStatus == 1 && a.idComplaint == id).ToList();
 
                 return View();
-            }             
+            }
         }
-
-        
-
-
     }
 }

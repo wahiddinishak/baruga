@@ -5,8 +5,9 @@
     {
         ViewData["Title"] = aduan.Topics;
     }
-    Layout = "_DetailLayout";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
 }
+
 
 <div class="section">
     <div class="card">
@@ -27,7 +28,7 @@
                                 @String.Concat(" ", @aduan.createdDate)
                             </label>
                         </span>
-                    </div>                    
+                    </div>
                     <div class="p-2">
                         @{
                             if (@aduan.Status == "2")
@@ -62,9 +63,9 @@
                     @foreach (var idPicture in ViewBag.imgSebelum)
                     {
                         <a href="#" class="pop">
-                            <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc" 
-                                 class="shadow rounded-lg float-sm-left ml-2" 
-                                 alt="@idPicture.caption" 
+                            <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc"
+                                 class="shadow rounded-lg float-sm-left ml-2"
+                                 alt="@idPicture.caption"
                                  style="width:70px; height:70px" />
                         </a>
                     }
@@ -136,7 +137,7 @@
                                     <label class="h6">Selesai</label>
                                     <label class="float-right text-muted">@aduan.solvedDate</label>
                                     <p>
-                                         @*@aduan.response*@
+                                        @*@aduan.response*@
                                     </p>
 
                                     <div class="d-flex">
@@ -219,7 +220,8 @@
                     }
                 })
             }
-        }              
+        }
 
     </script>
 }
+
