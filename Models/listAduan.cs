@@ -10,7 +10,7 @@ namespace barugaWeb.Models
     public class listAduan
     {
         [Key]
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string createdDate { get; set; }
         public string allocatedDate { get; set; }
         public string progressDate { get; set; }
@@ -22,6 +22,7 @@ namespace barugaWeb.Models
         public string NamaBelakang { get; set; }
         public string response { get; set; }
         public string Status { get; set; }
+        public int? dukungan { get; set; }
 
     }
 

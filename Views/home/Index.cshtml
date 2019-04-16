@@ -339,6 +339,7 @@
         function LoadCaseTop3() {
             $.get('@Url.Action("getCaseTop3", "Home")', null, function (result) {
                 var card, Topik, Uraian, nama, href;
+                
                 $.each(result, function (i, item) {
 
                     if (item.Topics.length > 37) {
@@ -358,12 +359,13 @@
                     } else {
                         nama = '&nbsp;' + item.NamaDepan + '&nbsp;' + item.NamaBelakang;
                     }
-
+                    
                     href = '/aspirasi/detail/' + item.ID + '';
-
+                    var regX = /(<([^>]+)>)/ig;
+                   
                     card = '<div class="p-2"> <div class="card" style="width: 22rem;"> <div class="card-header">';
                     card += '<a href="' + href +'" style="color:white;">' + Topik +'</a></div>';
-                    card += '<div class="card-body"> <div class="p-2"><p>'+ Uraian +'</p></div></div>';
+                    card += '<div class="card-body"> <div class="p-2">' + Uraian.replace(regX, "") +'</div></div>';
                     card += '<div class="card-footer"><div class="d-flex"><div class="p-2">';
                     card += '<span class="fas fa-user-tag"><label> '+ nama +'</label></span></div>';
                     card += '<div class="p-2 ml-auto"><a href="' + href +'"><span class="badge" style="background-image:url(/img/readmore.png);">Selengkapnya</span></a></div></div></div></div></div>';

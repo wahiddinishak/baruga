@@ -1,4 +1,5 @@
 ﻿@model trComplaintLv1
+@using Microsoft.AspNetCore.Http;
 
 @{
     @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.oneCase)
@@ -15,12 +16,44 @@
         @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.oneCase)
         {
             <div class="card-header" style="background-color: white; color: black;">
-                <label class="h5">
-                    <b>
-                        ID : #@aduan.ID
-                    </b>
-                </label>
-                <div class="d-flex" justify-content-end style="background-color: lightgray;">
+
+                <div class="d-flex justify-content-end">
+                    <div class="p-2 mr-auto">
+                        <b>
+                            ID : #@aduan.ID
+                        </b>
+                    </div>
+                    <div class="p-2" style="margin-top:-10px;">
+
+                        @if (String.IsNullOrEmpty(Context.Session.GetString("_Name")))
+                        {
+                            <button type="button" class="btn btn-primary btn-sm btn-round" style="font-size: 0.7142em; line-height: 12px;" data-toggle="popover" data-placement="left" data-content="Silahkan masuk untuk memberi dukungan." data-color="default">
+                                <i class="fas fa-heart"></i>
+                                <b> DUKUNG</b>
+                            </button>
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(Convert.ToString(ViewData["chk"])))
+                            {
+
+                                <button disabled type="button" class="btn btn-default btn-sm btn-round" style="font-size: 0.7142em; line-height: 12px;">
+                                    <i class="fas fa-heart"></i> <b>DUKUNG</b>
+                                </button>
+
+                            }
+                            else
+                            {
+
+                                <button id="btnDuk" type="button" class="btn btn-primary btn-sm btn-round" style="font-size: 0.7142em; line-height: 12px;" onclick="plus(@Context.Session.GetInt32("_IDUser").Value,@aduan.ID);">
+                                    <i class="fas fa-heart"></i> <b>DUKUNG</b>
+                                </button>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end" style="background-color: whitesmoke;">
                     <div class="p-2 mr-auto"><label><b>@aduan.Topics</b></label></div>
                     <div class="p-2">
                         <span class="fas fa-calendar-alt">
@@ -29,46 +62,25 @@
                             </label>
                         </span>
                     </div>
-                    <div class="p-2">
-                        @{
-                            if (@aduan.Status == "2")
-                            {
-                                <span class="badge badge-success">
-                                    Selesai
-                                </span>
-                            }
-                            else if (@aduan.Status == "1")
-                            {
-                                <span class="badge badge-danger">
-                                    Proses
-                                </span>
-                            }
-                            else
-                            {
-                                <span class="badge badge-info">
-                                    Baru
-                                </span>
-                            }
-                        }
-                    </div>
                 </div>
             </div>
+
             <div class="card-body" style="margin-top: -20px;">
-                <div class="p-2">
-                    <p>
-                        @aduan.Desc
-                    </p>
-                </div>
-                <div class="d-flex">
-                    @foreach (var idPicture in ViewBag.imgSebelum)
-                    {
-                        <a href="#" class="pop">
-                            <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc"
-                                 class="shadow rounded-lg float-sm-left ml-2"
-                                 alt="@idPicture.caption"
-                                 style="width:70px; height:70px" />
-                        </a>
-                    }
+                <div class="d-flex flex-column">
+                    <div class="p-2">
+                        @Html.Raw(aduan.Desc)
+                    </div>
+                    <div class="mt-2">
+                        @foreach (var idPicture in ViewBag.imgSebelum)
+                        {
+                            <a href="#" class="pop">
+                                <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc"
+                                     class="shadow rounded-lg float-sm-left ml-2"
+                                     alt="@idPicture.caption"
+                                     style="width:70px; height:70px" />
+                            </a>
+                        }
+                    </div>
                 </div>
 
             </div>
@@ -76,11 +88,21 @@
         }
 
         <div class="card-footer">
-            <label class="h6 p-2">
-                <b>
-                    Tindak Lanjut :
-                </b>
-            </label>
+            <div class="d-flex" style="background-color: whitesmoke;">
+                <div class="p-2 mr-auto" style="font-size: 12px; line-height: 12px;">
+                    <b>
+                        Tindak Lanjut :
+                    </b>
+                </div>
+                <div class="p-2" style="font-size: 12px; line-height: 12px;">
+                    <i class="fas fa-heart" style="color:orangered">&nbsp;</i>
+                    <label id="output" class="text-muted">@ViewData["dukungan"]</label>
+                    <label class="text-muted">Dukungan</label>
+                </div>
+            </div>
+
+
+
             <ul class="timeline">
                 @foreach (var aduan in (IEnumerable<listAduan>)ViewBag.oneCase)
                 {
@@ -184,6 +206,21 @@
 
             LoadFrmRegis();
         })
+
+        function plus(idUser, idCase)
+        {
+            $.get('@Url.Action("dukung", "aspirasi")?idUser='+idUser+'&idAduan='+idCase+'', null, function (result) {
+                if (result == '00') {
+                    $('#output').html(function (i, val) { return val * 1 + 1 });
+
+                    var element = document.getElementById("btnDuk");
+                    element.classList.remove("btn-primary");
+                    element.classList.add("btn-default");
+
+                    $('#btnDuk').attr("disabled", true);
+                }
+            })
+        }
 
         function LoadFrmRegis()
         {

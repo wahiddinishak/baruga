@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using barugaWeb.Models;
 using X.PagedList;
 using X.PagedList.Mvc;
@@ -20,9 +21,12 @@ namespace barugaWeb.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
+            var duk = db.trLilkes.GroupBy(x => x.idComplaint).Select(g => new { g.Key, dukungan = g.Count() });
+
             var AllComplaint = (from a in db.trComplaintLv1s
                                 where (a.deletedby == "" || a.deletedby == null) && a.allocatedDate != null
                                 join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail
+                                join c in duk on a.idComplaintLv1 equals c.Key into x from xd in x.DefaultIfEmpty()
                                 orderby a.idComplaintLv1 descending
                                 select new listAduan
                                 {
@@ -33,7 +37,9 @@ namespace barugaWeb.Controllers
                                     Hide = a.hideUser,
                                     NamaDepan = a.namaDepan,
                                     NamaBelakang = a.namaBelakang,
-                                    Status = a.status
+                                    Status = a.status,
+                                    dukungan = (xd == null ? 0 : xd.dukungan)
+
                                 }).ToList();
 
             ViewBag.AllComplaint = AllComplaint.ToPagedList(pageNumber, pageSize);
@@ -55,6 +61,24 @@ namespace barugaWeb.Controllers
         [HttpGet]
         public IActionResult detail(int? id)
         {
+            var duk = db.trLilkes.Where(a => a.idComplaint == id).GroupBy(x => x.idComplaint).Select(g => new { g.Key, dukungan = g.Count() }).ToList();
+            if (duk.Count() > 0)
+            {
+                ViewData["dukungan"] = duk[0].dukungan;
+            } else
+            {
+                ViewData["dukungan"] = 0;
+            }
+
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("_Name")))
+            {
+                var chkduk = db.trLilkes.Where(a => a.idComplaint == id && a.idUser == HttpContext.Session.GetInt32("_IDUser").Value).ToList();
+                if (chkduk.Count() > 0)
+                {
+                    ViewData["chk"] = chkduk[0].idUser;
+                } 
+            }
+
             // konten detail
             var oneCase = from a in db.trComplaintLv1s
                           where (a.deletedby == "" || a.deletedby == null) && a.idComplaintLv1 == id
@@ -153,6 +177,28 @@ namespace barugaWeb.Controllers
 
                 return View();
             }
+        }
+
+        [HttpGet]
+        public IActionResult dukung(int? idUser, int? idAduan)
+        {
+            if (db.trLilkes.Where(a => a.idUser == idUser && a.idComplaint == idAduan).Count() > 0) 
+            {
+                return Content("Anda Sudah Mendukung Aspirasi Ini.");
+            }
+            else
+            {
+                trLilke data = new trLilke();
+
+                data.idComplaint = idAduan;
+                data.idUser = idUser;
+
+                db.trLilkes.Add(data);
+                db.SaveChanges();
+
+                return Content("00");
+            }
+            
         }
     }
 }
