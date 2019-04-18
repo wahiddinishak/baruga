@@ -5,6 +5,7 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\bin\Debug\netcoreapp2.1\baru
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\bin\Debug\netcoreapp2.1\barugaWeb.pdb
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\bin\Debug\netcoreapp2.1\barugaWeb.Views.dll
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\bin\Debug\netcoreapp2.1\barugaWeb.Views.pdb
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.csprojAssemblyReference.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.csproj.CoreCompileInputs.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.RazorAssemblyInfo.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.RazorAssemblyInfo.cs
@@ -37,4 +38,3 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\baru
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.dll
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.pdb
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.csproj.CopyComplete
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Debug\netcoreapp2.1\barugaWeb.csprojAssemblyReference.cache

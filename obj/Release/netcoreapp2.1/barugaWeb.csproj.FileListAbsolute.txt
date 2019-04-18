@@ -14,9 +14,6 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\ba
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\barugaWeb.TagHelpers.input.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\barugaWeb.TagHelpers.output.cache
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\barugaWeb.RazorCoreGenerate.cache
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\aduan\detail.g.cshtml.cs
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\aduan\Index.g.cshtml.cs
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\aduan\_detailnotfound.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\home\Index.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
@@ -35,7 +32,9 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\ba
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\barugaWeb.csproj.CopyComplete
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Profile\AspirasiSaya.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Profile\Index.g.cshtml.cs
-C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\aduan\_register.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\home\wizard.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\home\_aduanPost.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\home\_register.g.cshtml.cs
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Aspirasi\detail.g.cshtml.cs
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Aspirasi\Index.g.cshtml.cs
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Aspirasi\_detailnotfound.g.cshtml.cs

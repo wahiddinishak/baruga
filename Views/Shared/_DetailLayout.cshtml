@@ -304,6 +304,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js" type="text/javascript"></script>
     <script src="~/js/baruga.js" type="text/javascript"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (navigator.userAgent.match(/android/i)) {
+                window.location.href = "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.rovio.angrybirds";
+            } else if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                window.location.href = "https://itunes.apple.com/id/app/angry-birds-2/id880047117?mt=8";
+            }
+        });
+    </script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

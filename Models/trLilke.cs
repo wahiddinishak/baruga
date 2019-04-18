@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace barugaWeb.Models
 {
 
-    [Table("trLIke")]
+    [Table("trLike")]
     public class trLilke
     {
         public int? id { get; set; }
