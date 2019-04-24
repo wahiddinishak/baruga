@@ -194,10 +194,10 @@ namespace barugaWeb.Controllers
         public IActionResult Index()
         {
 
-            ViewData["totalCase"] = db.trComplaintLv1s.Where(a => a.deletedby == "").Count();
-            ViewData["OPDProv"] = db.msOPDProvs.Where(a => a.deletedBy == "").Count();
-            ViewData["Pemkabkot"] = db.msKabKots.Where(a => a.deletedBy == "").Count();
-            ViewData["OPDKabkot"] = db.msOPDKabKots.Where(a => a.deletedBy == "").Count();
+            ViewData["totalCase"] = db.trComplaintLv1s.Where(a => a.deletedby == "" || a.deletedby == null).Count();
+            ViewData["OPDProv"] = db.msOPDProvs.Where(a => a.deletedBy == "" || a.deletedBy == null).Count();
+            ViewData["Pemkabkot"] = db.msKabKots.Where(a => a.deletedBy == "" || a.deletedBy == null).Count();
+            ViewData["OPDKabkot"] = db.msOPDKabKots.Where(a => a.deletedBy == "" || a.deletedBy == null).Count();
 
             return View();
         }
@@ -211,10 +211,13 @@ namespace barugaWeb.Controllers
         [HttpGet]
         public IActionResult getCaseTop3()
         {
+            var duk = db.trLilkes.GroupBy(x => x.idComplaint).Select(g => new { g.Key, dukungan = g.Count() });
+
             var caseTop3 = from a in db.trComplaintLv1s
                            where (a.deletedby == "" || a.deletedby == null) && a.allocatedDate != null
                            join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail
-                           orderby a.idComplaintLv1 descending
+                           join c in duk on a.idComplaintLv1 equals c.Key into x from xd in x.DefaultIfEmpty()
+                           orderby xd.dukungan descending
                            select new
                            {
                                ID = a.idComplaintLv1,
@@ -223,6 +226,7 @@ namespace barugaWeb.Controllers
                                Hide = a.hideUser,
                                NamaDepan = a.namaDepan,
                                NamaBelakang = a.namaBelakang,
+                               Dukungan = (xd == null ? 0 : xd.dukungan),
                                Status = a.status
                            };
             var limitCase = caseTop3.Take(3);
@@ -239,6 +243,13 @@ namespace barugaWeb.Controllers
         public IActionResult getKec(int idKabKot)
         {
             return new JsonResult(db.msKecs.Where(a => (a.deletedBy == "" || a.deletedBy == null) && a.idKabKot == idKabKot).OrderBy(a => a.idKec).ToList());
+        }
+
+        public IActionResult direct()
+        {
+            ViewData["Title"] = "Direct";
+            ViewData["Text"] = "ABC";
+            return View();
         }
 
 

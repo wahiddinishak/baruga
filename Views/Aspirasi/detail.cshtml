@@ -74,7 +74,7 @@
                         @foreach (var idPicture in ViewBag.imgSebelum)
                         {
                             <a href="#" class="pop">
-                                <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc"
+                                <img src="http://admin.baruga.sulselprov.go.id/assets/image_lapor/@idPicture.imgSrc"
                                      class="shadow rounded-lg float-sm-left ml-2"
                                      alt="@idPicture.caption"
                                      style="width:70px; height:70px" />
@@ -146,32 +146,67 @@
                         </li>
                         if (aduan.progressDate != null)
                         {
-                            <li>
-                                <label class="h6">Proses</label>
-                                <label class="float-right text-muted">@aduan.progressDate</label>
-                                <p>
-                                    Diproses oleh <b>@ViewData["opd1"]</b>
-                                </p>
-                            </li>
+                            foreach (var idComplaintResponse in ViewBag.respon)
+                            {
+                                if (idComplaintResponse.from == 0)
+                                {
+                                    <li>
+                                        <label class="h6">Tindakan</label>
+                                        <label class="float-right text-muted">@idComplaintResponse.createdAt</label>
+                                        <p>
+                                            Ditindak lanjuti oleh <b>@ViewData["opd1"]</b>
+                                        </p>
+                                        <p class="text-muted">
+                                            <em>
+                                                @idComplaintResponse.response
+                                            </em>
+                                        </p>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <label class="h6">Tanggapan</label>
+                                        <label class="float-right text-muted">@idComplaintResponse.createdAt</label>
+
+                                        @if (aduan.Hide == "0")
+                                        {
+                                            <p>
+                                                Ditanggapi oleh
+                                                <b>
+                                                    @String.Concat(@aduan.NamaDepan, " ", @aduan.NamaBelakang)
+                                                </b>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p>
+                                                Ditanggapi oleh
+                                                <b>
+                                                    Anonim
+                                                </b>
+                                            </p>
+                                        }
+                                        <p class="text-muted">
+                                            <em>
+                                                @idComplaintResponse.response
+                                            </em>
+                                        </p>
+                                    </li>
+                                }
+                            }
+
                             if (aduan.solvedDate != null)
                             {
                                 <li>
                                     <label class="h6">Selesai</label>
                                     <label class="float-right text-muted">@aduan.solvedDate</label>
                                     <p>
-                                        @*@aduan.response*@
+                                        Terima kasih telah menggunakan layanan Baruga Sulsel. Aspirasi ini telah dinyatakan selesai.
                                     </p>
-
-                                    <div class="d-flex">
-                                        @foreach (var idPicture in ViewBag.imgSesudah)
-                                        {
-                                            <a href="#" class="pop">
-                                                <img src="http://dev.baruga.sulselprov.go.id/admin/assets/image_lapor/@idPicture.imgSrc" class="shadow rounded-lg float-sm-left ml-2" alt="@idPicture.caption" style="width:70px; height:70px" />
-                                            </a>
-                                        }
-                                    </div>
                                 </li>
                             }
+
                         }
                     }
                 }

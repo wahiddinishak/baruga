@@ -231,12 +231,12 @@
                         </li>
                         <li>
                             <a href="#!">
-                                <img src="~/img/icon-playstore.png" alt="" class="img-responsive" width="135" height="40">
+                                <img src="~/img/google-play-badge.svg" alt="" class="img-responsive" width="135" height="40">
                             </a>
                         </li>
                         <li>
                             <a href="#!">
-                                <img src="~/img/App_Store_Badge_US-UK_135x40.svg" alt="" class="img-responsive">
+                                <img src="~/img/App_Store_Badge_US-UK_135x40.svg" alt="" class="img-responsive" width="135" height="40">
                             </a>
                         </li>
                     </ul>
@@ -306,10 +306,14 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            if (navigator.userAgent.match(/android/i)) {
-                window.location.href = "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.rovio.angrybirds";
-            } else if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-                window.location.href = "https://itunes.apple.com/id/app/angry-birds-2/id880047117?mt=8";
+            if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+                window.location = "market://details?id=id.go.sulselprov.baper";
+            } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+                window.location = "itms-apps://itunes.apple.com/app/bank-sulselbar-apps/id1446698815?mt=8";
+            } else if (navigator.userAgent.toLowerCase().indexOf("ipod") > -1) {
+                window.location = "itms-apps://itunes.apple.com/app/bank-sulselbar-apps/id1446698815?mt=8";
+            } else if (navigator.userAgent.toLowerCase().indexOf("ipad") > -1) {
+                window.location = "itms-apps://itunes.apple.com/app/bank-sulselbar-apps/id1446698815?mt=8";
             }
         });
     </script>

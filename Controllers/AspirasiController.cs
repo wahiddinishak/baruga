@@ -62,6 +62,7 @@ namespace barugaWeb.Controllers
         public IActionResult detail(int? id)
         {
             var duk = db.trLilkes.Where(a => a.idComplaint == id).GroupBy(x => x.idComplaint).Select(g => new { g.Key, dukungan = g.Count() }).ToList();
+
             if (duk.Count() > 0)
             {
                 ViewData["dukungan"] = duk[0].dukungan;
@@ -82,8 +83,7 @@ namespace barugaWeb.Controllers
             // konten detail
             var oneCase = from a in db.trComplaintLv1s
                           where (a.deletedby == "" || a.deletedby == null) && a.idComplaintLv1 == id
-                          join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail into gj
-                          from x in gj.DefaultIfEmpty()
+                          join b in db.msTopicsDetails on a.idTopics equals b.idTopicsDetail 
                           select new listAduan
                           {
                               ID = a.idComplaintLv1,
@@ -91,12 +91,11 @@ namespace barugaWeb.Controllers
                               allocatedDate = a.allocatedDate,
                               progressDate = a.progressDate,
                               solvedDate = a.solvedDate,
-                              Topics = (x == null ? "Topik Aspirasi Sedang Tahap Moderasi" : x.name),
+                              Topics = b.name,
                               Desc = a.desc,
                               Hide = a.hideUser,
                               NamaDepan = a.namaDepan,
-                              NamaBelakang = a.namaBelakang,
-                              Status = a.status
+                              NamaBelakang = a.namaBelakang
                           };
 
             if (oneCase.Count() < 1)
@@ -171,6 +170,8 @@ namespace barugaWeb.Controllers
                     }
                 }
                 ViewData["opd1"] = op1;
+
+                ViewBag.respon = db.trComplaintResponses.Where(a => a.idComplaintLv1 == id).OrderBy(a => a.idComplaintResponse).ToList();
 
                 ViewBag.imgSebelum = db.trComplaintPictures.Where(a => a.imgStatus == 0 && a.idComplaint == id).ToList();
                 ViewBag.imgSesudah = db.trComplaintPictures.Where(a => a.imgStatus == 1 && a.idComplaint == id).ToList();

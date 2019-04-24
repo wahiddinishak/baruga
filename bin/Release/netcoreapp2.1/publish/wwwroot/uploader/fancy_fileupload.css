@@ -219,7 +219,7 @@
 	}
 
 	.ff_fileupload_wrap table.ff_fileupload_uploads td.ff_fileupload_actions button.ff_fileupload_start_upload {
-		margin-right: 0.5em;
+		display: none;
 	}
 
 .ff_fileupload_wrap table.ff_fileupload_uploads td.ff_fileupload_preview .ff_fileupload_actions_mobile {
@@ -259,6 +259,9 @@
 
 .ff_fileupload_wrap table.ff_fileupload_uploads button.ff_fileupload_remove_file {
 	background-image: url('fancy_remove.png');
+	margin-left: -5px;
+	margin-right: 10px;
+	margin-top: -1px;
 }
 
 /* Colored buttons based on file extension for non-images. */
@@ -414,7 +417,7 @@
 	padding: 1em;
 	font-size: 0.9em;
 	white-space: normal;
-	text-align:left;
+	text-align: left;
 }
 
 	.ff_fileupload_wrap table.ff_fileupload_uploads td.ff_fileupload_summary .ff_fileupload_filename {

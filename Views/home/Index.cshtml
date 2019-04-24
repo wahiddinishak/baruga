@@ -148,10 +148,10 @@
     </div>
 </div>
 
-<!-- aduan terbaru -->
+<!-- aduan -->
 <div class="section-aduan">
     <div class="container">
-        <h4 class="title">Aduan Terbaru</h4>
+        <h4 class="title">Dukungan Terbanyak</h4>
         <div class="d-flex mb-3" id="caseTop"></div>
         <div class="d-flex justify-content-center mb-3">
             <div class="p-2">
@@ -366,7 +366,9 @@
                    
                     card = '<div class="p-2"> <div class="card" style="width: 22rem;"> <div class="card-header">';
                     card += '<a href="' + href +'" style="color:white;">' + Topik +'</a></div>';
-                    card += '<div class="card-body"> <div class="p-2">' + Uraian.replace(regX, "") +'</div></div>';
+                    card += '<div class="card-body"><div class="p-2" style="min-height: 100px;"><p>' + Uraian.replace(regX, "") + '</p></div>';
+                    card += '<div class="p-2" style="font-size: 12px; line-height: 12px;"><i class="fas fa-heart" style="color:orangered">&nbsp;</i>';
+                    card += '<label id="output" class="text-muted">'+ item.Dukungan +'</label><label class="text-muted">&nbsp;Dukungan</label></div></div>';
                     card += '<div class="card-footer"><div class="d-flex"><div class="p-2">';
                     card += '<span class="fas fa-user-tag"><label> '+ nama +'</label></span></div>';
                     card += '<div class="p-2 ml-auto"><a href="' + href +'"><span class="badge" style="background-image:url(/img/readmore.png);">Selengkapnya</span></a></div></div></div></div></div>';

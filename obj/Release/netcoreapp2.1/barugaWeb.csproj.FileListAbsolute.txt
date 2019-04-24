@@ -38,3 +38,4 @@ C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Ra
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Aspirasi\detail.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Aspirasi\Index.g.cshtml.cs
 C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\Aspirasi\_detailnotfound.g.cshtml.cs
+C:\PROJECT\03 Sulselprov\Baruga\barugaWeb\barugaWeb\obj\Release\netcoreapp2.1\Razor\Views\home\direct.g.cshtml.cs

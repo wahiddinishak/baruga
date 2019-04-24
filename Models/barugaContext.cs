@@ -31,6 +31,7 @@ namespace barugaWeb.Models
         public virtual DbSet<trComplaintLv3> trComplaintLv3s { get; set; }
         public virtual DbSet<trComplaintPicture> trComplaintPictures { get; set; }
         public virtual DbSet<trLilke> trLilkes { get; set; }
+        public virtual DbSet<trComplaintResponse> trComplaintResponses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
